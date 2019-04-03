@@ -17,7 +17,10 @@ def is_ip_in_nets(ip, nets):
 
 
 class BlockIPMiddleware(object):
-    def process_request(self, request):
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
         is_banned = False
 
         ip = get_ip(request)
@@ -39,3 +42,4 @@ class BlockIPMiddleware(object):
             for k in request.session.keys():
                 del request.session[k]
             return HttpResponseForbidden("")
+        return self.get_response(request)

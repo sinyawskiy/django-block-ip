@@ -11,8 +11,7 @@ def get_ip(req):
 
 def is_ip_in_nets(ip, nets):
     for net in nets:
-        if ip in net:
-            return True
+        return ip in net
     return False
 
 
